@@ -6,6 +6,7 @@
 #include <math.h>
 #include <list>
 #include <bits/stdc++.h>
+#include <cmath>
 
 using namespace std;
 
@@ -19,9 +20,11 @@ int fib(int n);
 bool is_prime(int n);
 int largest_prime_factor(long long int n);
 bool is_palindrome(int n);
+int largest_palindromic_product(int digits);
 
 int main()
 {
+	
 	soln1 = sum_of_multiples(3,5,1000);
 	soln2 = even_fib_sum(4000000);
 	soln3 = largest_prime_factor(600851475143);
@@ -35,6 +38,13 @@ int main()
 
 	cout << "Is 12321 a palindrome? -- " << is_palindrome(12321) << endl;
 	cout << "How about 12322? -- " << is_palindrome(12322) << endl;
+
+	cout << "Is 9009 a palindrome? -- " << is_palindrome(9009) << endl;
+
+	cout << endl;
+	cout << endl;
+
+	cout << largest_palindromic_product(2);
 
 	return 0;
 	
@@ -127,7 +137,6 @@ int largest_prime_factor(long long int n) {
 	}
 	return largest;
 
-
 }
 
 bool is_palindrome(int n) {
@@ -137,12 +146,27 @@ bool is_palindrome(int n) {
 	bool result = true;
 	string number = to_string(n);
 	int midpoint = ceil(number.length() / 2);
-	for (int i = 1; i < midpoint; ++i) {
-		if (number[i] != number[-i]) {
+	for (int i = 0; i < midpoint; ++i) {
+		if (number[i] != number[number.length() - i - 1]) {
 			result = false;
 			return result;
 		}
 	}
 	return result;
 
+}
+
+int largest_palindromic_product(int digits) {
+	int lower_bound = pow(10,(digits - 1));
+	int upper_bound = pow(10, digits);
+	int largest = 1;
+	for (int i = lower_bound; i < upper_bound; ++i) {
+		for (int j = lower_bound; j < upper_bound; ++j) {
+			int product = i * j;
+			if (is_palindrome(product) && product > largest) {
+				largest = product;
+			}
+		}
+	}
+	return largest;
 }
