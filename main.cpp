@@ -8,6 +8,7 @@
 //#include <bits/stdc++.h>
 #include <cmath>
 #include <cassert>
+#include <vector>
 
 using namespace std;
 
@@ -29,10 +30,10 @@ int evenly_disible(int n);
 int gcd(int a, int b);
 int lcm(int a, int b);
 int problem5();
-int sum_of_squares(int n);
-int square_of_sum(int n);
+long sum_of_squares(int n);
+long square_of_sum(int n);
 int problem6();
-
+int nth_prime( int n );
 
 int main()
 {
@@ -43,6 +44,7 @@ int main()
 	soln4 = largest_palindromic_product(3);
 	soln5 = problem5();
 	soln6 = problem6();
+	int soln7 = nth_prime(10001);
 	
 	cout << "\n--- Project Euler ---" << endl;
 	cout << endl;
@@ -53,10 +55,16 @@ int main()
 	cout << "4. The largest palindomic product of two 3 digit numbers is: "
 	<< soln4 << endl;
 	cout << "5. The smallest number evenly divisible by 1,2,...,20 is: " << soln5 << endl;
-	cout << "6. The absolute difference between the square of sum, and sum of squares "
+	cout << "6. The absolute difference between the square of sum, and sum of squares\n"
 	<< "of all positive integers (1,2,..., 100) is: " << soln6 << endl;
+	cout << "7. The 10001st prime is: " << soln7 << endl;
 	
 	cout << endl;
+
+	// cout << "Nth Prime test: " << endl;
+	// for (int i = 1; i <= 10; ++i) {
+	// 	cout << nth_prime(i) << endl;
+	// }
 
 	assert(sum_of_squares(10) == 385);
 	assert(square_of_sum(10) == 3025);
@@ -258,29 +266,29 @@ int problem5() {
 	return result;
 }
 
-int sum_of_squares(int n) {
+long sum_of_squares(int n) {
 	/* this function will return the sum
 	of the squares from 1,2,...n */
-	int sum = 0;
-	for (int i = 1; i <= n; i++)
-	{
-		int square = pow(i,2);
-		sum += square;
-	}
+	long result = (n * (n+1) * (2*n+1)) / 6;
+	// for (int i = 1; i <= n; i++)
+	// {
+	// 	int square = pow(i,2);
+	// 	sum += square;
+	// }
 
-	return sum;
+	return result;
 
 }
 
-int square_of_sum(int n) {
+long square_of_sum(int n) {
 	/* this function will return the square
 	of the sum of all integers (1,2,...,n). in other words:
 	output = (1+2+...+n)^2 */
-	int sum = 0;
-	for (int i = 1; i <= n; i++)
-	{
-		sum += i;
-	}
+	long sum = (n * (n+1) ) / 2;
+	// for (int i = 1; i <= n; i++)
+	// {
+	// 	sum += i;
+	// }
 	return pow(sum, 2);
 }
 
@@ -292,4 +300,32 @@ int problem6() {
 	result = abs(square - sum);
 	return result;
 
+}
+
+int nth_prime(int n) {
+	/* This function will return the
+	nth prime. */
+
+	int counter = 1;
+	bool isPrime;
+	int j;
+	vector<int> primes;
+	primes.push_back(2);
+
+	while (primes.size() < n) {
+		counter += 2;
+		j = 0;
+		isPrime = true;
+		while (pow(primes[j], 2) <= counter) {
+			if (counter % primes[j] == 0) {
+				isPrime = false;
+				break;
+			}
+			j++;
+		}
+		if (isPrime) {
+			primes.push_back(counter);
+		}
+	}
+	return primes.back();
 }
