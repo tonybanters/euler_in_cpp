@@ -13,6 +13,7 @@ using namespace std;
 int soln1;
 int soln2;
 int soln3;
+int soln4;
 
 int sum_of_multiples(int x1, int x2, int n);
 int even_fib_sum(int n);
@@ -21,6 +22,7 @@ bool is_prime(int n);
 int largest_prime_factor(long long int n);
 bool is_palindrome(int n);
 int largest_palindromic_product(int digits);
+int evenly_disible(int n);
 
 int main()
 {
@@ -28,23 +30,16 @@ int main()
 	soln1 = sum_of_multiples(3,5,1000);
 	soln2 = even_fib_sum(4000000);
 	soln3 = largest_prime_factor(600851475143);
+	soln4 = largest_palindromic_product(3);
 	
 	cout << "The sum of all multiples of 3 and 5 below 1000 is: " << soln1 << endl;
 	cout << "The sum of even Fibonacci numbers below 4,000,000 is: " << soln2 << endl;
 	cout << "The largest prime factor of '600851475143' is: " << soln3 << endl;
+	cout << "The largest palindomic product of two 3 digit numbers is: "
+	<< soln4 << endl;
 
-	cout << endl;
-	cout << endl;
 
-	cout << "Is 12321 a palindrome? -- " << is_palindrome(12321) << endl;
-	cout << "How about 12322? -- " << is_palindrome(12322) << endl;
-
-	cout << "Is 9009 a palindrome? -- " << is_palindrome(9009) << endl;
-
-	cout << endl;
-	cout << endl;
-
-	cout << largest_palindromic_product(2);
+	cout << evenly_disible(20) << endl;
 
 	return 0;
 	
@@ -169,4 +164,37 @@ int largest_palindromic_product(int digits) {
 		}
 	}
 	return largest;
+}
+
+int evenly_disible(int n) {
+	/* this function will return the smallest number
+	that is evenly disible by all numbers between 1 and n */
+
+	int smallest = n;
+	bool solved = false;
+
+
+	while (solved == false) {
+		int count = 0;
+		printf("smallest is %d, and count is %d\n", smallest, count);
+		for (int i = 1; i <= n; ++i)
+		{
+			if (smallest % i == 0)
+			{
+				count += 1;
+			}
+		}
+
+		if (count == n) {
+			solved = true;
+			
+		}
+		else
+		{
+			smallest += n;
+		}
+		
+
+	}
+	return smallest;
 }
